@@ -59,23 +59,20 @@ def test_delete_pet():
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
 
     if len(my_pets['pets']) == 0:
-        pf.post_new_friends(auth_key, "Kitty", "cater", "3", "images/Kitty.pnp")
-        # pf.post_new_friends(auth_key, name='Snuppy', animal_type='dog', age='5', pet_photo='images/korgi.jpg')
+        pf.post_new_friends(auth_key, "Kitty", "cater", "3", "images/Kitty.png")
+        pf.post_new_friends(auth_key, name='Kitty', animal_type='cater', age='3', pet_photo='images/Kitty.png')
         _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
 
-    # Берём id первого питомца из списка и отправляем запрос на удаление
     pet_id = my_pets['pets'][0]['id']
     status, _ = pf.delete_pet(auth_key, pet_id)
 
-    # Ещё раз запрашиваем список своих питомцев
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
-    # Проверяем что статус ответа равен 200 и в списке питомцев нет id удалённого питомца
     assert status == 200
     assert pet_id not in my_pets.values()
 
 
-def test_delete_pet_2(name='Patrik', animal_type='star', age='2'):
-    """Проверяем возможность удаления клички питомца"""
+def test_delete_pet_2(name='Gena', animal_type='cater', age='4'):
+  
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
     pet_id = my_pets['pets'][0]['id']
@@ -85,8 +82,8 @@ def test_delete_pet_2(name='Patrik', animal_type='star', age='2'):
     assert name not in pet_id
 
 
-def test_delete_pet_3(name='Patrik', animal_type='star', age='2'):
-    """Проверяем возможность удаления type питомца"""
+def test_delete_pet_3(name='Gena', animal_type='cater', age='4'):
+    
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
     pet_id = my_pets['pets'][0]['id']
@@ -96,8 +93,8 @@ def test_delete_pet_3(name='Patrik', animal_type='star', age='2'):
     assert animal_type not in pet_id
 
 
-def test_put_self_pet_info(name='PatrikStar', animal_type='star', age='2'):
-    """Проверяем возможность обновления информации о кличке питомца"""
+def test_put_self_pet_info(name='Genafond', animal_type='cater', age='4'):
+    
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
     status, result = pf.put_pet_info(auth_key, my_pets['pets'][0]['id'], name, animal_type, age)
@@ -105,8 +102,8 @@ def test_put_self_pet_info(name='PatrikStar', animal_type='star', age='2'):
     assert result['name'] == name
 
 
-def test_put_self_pet_info_2(name='Patrik', animal_type='baby star', age='2'):
-    """Проверяем возможность обновления информации о виде питомца"""
+def test_put_self_pet_info_2(name='Gena', animal_type='catze', age='4'):
+   
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
     status, result = pf.put_pet_info(auth_key, my_pets['pets'][1]['id'], name, animal_type, age)
@@ -114,8 +111,8 @@ def test_put_self_pet_info_2(name='Patrik', animal_type='baby star', age='2'):
     assert result['animal_type'] == animal_type
 
 
-def test_put_self_pet_info_3(name='Patrik', animal_type='star', age='700'):
-    """Проверяем возможность обновления информации о возрасте питомца"""
+def test_put_self_pet_info_3(name='Gena', animal_type='cater', age='44'):
+    
     _, auth_key = pf.get_api_key(valid_email, valid_password)
     _, my_pets = pf.get_list_of_pets(auth_key, "my_pets")
     status, result = pf.put_pet_info(auth_key, my_pets['pets'][2]['id'], name, animal_type, age)
